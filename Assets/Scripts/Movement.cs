@@ -12,6 +12,11 @@ public class Movement : MonoBehaviour
     private Vector3 initialCenterOfMass;
     Rigidbody initialRb;
 
+    private ParticleSystem thruster_w;
+    private ParticleSystem thruster_a;
+    private ParticleSystem thruster_s;
+    private ParticleSystem thruster_d;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +27,11 @@ public class Movement : MonoBehaviour
         initialCenterOfMass = this.rb.centerOfMass;
         initialCenterOfMass = new Vector3(0, -0.8f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
+
+        thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_a = GameObject.Find("Thruster A").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_s = GameObject.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_d = GameObject.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -36,23 +46,58 @@ public class Movement : MonoBehaviour
             rb.AddForce(transform.forward * thrust);
             rb.AddForce(transform.up * thrust);
         }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            thruster_w.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.W))
+        {
+            thruster_w.Stop();
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(-transform.right * thrust);
             rb.AddForce(transform.up * thrust);
         }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            thruster_a.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            thruster_a.Stop();
+        }
+
         if (Input.GetKey(KeyCode.S))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce((-transform.forward) * thrust);
             rb.AddForce(transform.up * thrust);
         }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            thruster_s.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            thruster_s.Stop();
+        }
+
         if (Input.GetKey(KeyCode.D))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(transform.right * thrust);
             rb.AddForce(transform.up * thrust);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            thruster_d.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            thruster_d.Stop();
         }
 
         if (Input.GetKeyDown(KeyCode.R))
