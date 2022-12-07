@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
-    public float thrust = 80f;
+    public float thrust = 0.2f;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private Vector3 initialAngularRotation;

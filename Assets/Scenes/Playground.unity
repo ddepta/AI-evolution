@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 200325810}
   - component: {fileID: 200325809}
   m_Layer: 0
-  m_Name: Thruster D
+  m_Name: Thruster A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1e42337e65ee14aa81698472ba90fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 1.2
+  thrust: 0.2
 --- !u!54 &534120967
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5305,7 +5305,7 @@ GameObject:
   - component: {fileID: 872349406}
   - component: {fileID: 872349405}
   m_Layer: 0
-  m_Name: Thruster A
+  m_Name: Thruster D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10339,7 +10339,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 99c9bc84e5739ab448d8def84f50cbc4, type: 2}
+  - {fileID: 2100000, guid: b69e7923750deee4fa027639ceeade71, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -15209,7 +15209,7 @@ GameObject:
   - component: {fileID: 1650573551}
   - component: {fileID: 1650573550}
   m_Layer: 0
-  m_Name: Thruster S
+  m_Name: Thruster W
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15307,7 +15307,7 @@ GameObject:
   - component: {fileID: 1653731252}
   - component: {fileID: 1653731251}
   m_Layer: 0
-  m_Name: Thruster W
+  m_Name: Thruster S
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
