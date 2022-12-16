@@ -70,3 +70,29 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#ML-Agents
+
+# Output Artifacts (Legacy)
+/models
+/summaries
+# Output Artifacts
+/results
+# Output Builds
+/Builds
+
+# Training environments
+/envs
+
+# pytest cache
+*.pytest_cache/
+
+# Ignore compiled protobuf files.
+*Grpc.Tools*
+
+# Ignore PyPi build files.
+dist/
+build/
+
+# Python virtual environment
+venv/
