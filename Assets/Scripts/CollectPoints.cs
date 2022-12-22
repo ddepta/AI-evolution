@@ -18,7 +18,7 @@ public class CollectPoints : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.layer != 6)
+        if(other.gameObject.layer == 8)
         {
             Destroy(other.gameObject);
 

@@ -28,29 +28,36 @@ public class MoveToPointAgent : Agent
 
     public override void OnActionReceived(ActionBuffers actions)
     {
-        float moveX = actions.ContinuousActions[0];
-        float moveZ = actions.ContinuousActions[1];
+        var w = actions.DiscreteActions[0];
+        var a = actions.DiscreteActions[1];
+        var s = actions.DiscreteActions[2];
+        var d = actions.DiscreteActions[3];
+        AddReward(-0.0005f);
 
-        if (moveZ == -1)
+
+
+        Debug.Log(w.ToString() + a.ToString() + s.ToString() + d.ToString());
+
+        if (w == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce((-transform.forward) * thrust);
             rb.AddForce(transform.up * thrust);
         }
-        if (moveZ == 1)
+        if (a == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(transform.forward * thrust);
             rb.AddForce(transform.up * thrust);
         }
-
-        if (moveX == -1)
+        
+        if (s == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(-transform.right * thrust);
             rb.AddForce(transform.up * thrust);
         }
-        if (moveX == 1)
+        if (d == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(transform.right * thrust);
@@ -67,15 +74,21 @@ public class MoveToPointAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        continuousActions[0] = Input.GetAxisRaw("Horizontal");
-        continuousActions[1] = Input.GetAxisRaw("Vertical");
+        //continuousActions[0] = Input.GetAxisRaw("Horizontal");
+        //continuousActions[1] = Input.GetAxisRaw("Vertical");
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer != 6)
+        if (other.gameObject.layer == 8)
         {
             SetReward(1f);
+            EndEpisode();
+
+        }
+        if (other.gameObject.layer == 9)
+        {
+            SetReward(-1f);
             EndEpisode();
 
         }
