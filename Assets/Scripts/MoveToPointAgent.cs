@@ -48,7 +48,7 @@ public class MoveToPointAgent : Agent
     }
     public override void OnEpisodeBegin()
     {
-        transform.position = Vector3.zero;
+        transform.position = initialPosition;
     }
 
 
@@ -58,10 +58,11 @@ public class MoveToPointAgent : Agent
         yRotation = this.transform.rotation.y;
         zRotation = this.transform.rotation.z;
         var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
-        //Debug.Log(this.transform.position.y);
+        //Debug.Log("rotation reward: " + -reward);
+        Debug.Log("reward: " + GetCumulativeReward());
 
 
-        AddReward(-reward);
+        //AddReward(-reward);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -76,7 +77,6 @@ public class MoveToPointAgent : Agent
         var s = actions.DiscreteActions[2];
         var d = actions.DiscreteActions[3];
         AddReward(-0.0005f);
-
 
         thruster_w.Stop();
         thruster_a.Stop();
@@ -115,16 +115,6 @@ public class MoveToPointAgent : Agent
             thruster_d.Play();
         }
 
-        if (w + a + s + d == 4)
-        {
-            Debug.Log("power to all thrusters");
-            AddReward(2f);
-        }
-        else
-        {
-            Debug.Log("no");
-
-        }
         //float moveSpeed = 1f;
         //transform.position = new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
@@ -158,12 +148,16 @@ public class MoveToPointAgent : Agent
 
     void OnTriggerEnter(Collider other)
     {
+        // collect point
         if (other.gameObject.layer == 8)
         {
+            //Destroy(other.gameObject);
+            Debug.Log("collected");
             SetReward(1f);
             EndEpisode();
-
         }
+
+        // collision with wall
         if (other.gameObject.layer == 9)
         {
             SetReward(-1f);
