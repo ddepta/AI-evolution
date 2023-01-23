@@ -6,17 +6,26 @@ public class SpawnManager : MonoBehaviour
 {
     bool spawnRequired = true;
     public GameObject spawnPoint;
+
+    private GameObject spawnTarget;
     int count = 0;
 
     public void SpawnCollectible()
     {
         var position = new Vector3(Random.Range(-9, 9), 0.2f, Random.Range(-9, 9));
-        var pointObject = Instantiate(spawnPoint);
+        spawnTarget = Instantiate(spawnPoint);
 
-        pointObject.transform.parent = transform;
-        pointObject.transform.localPosition = position;
+        spawnTarget.transform.parent = transform;
+        spawnTarget.transform.localPosition = position;
     }
 
+    public GameObject GetCollectible() { return spawnTarget; }
+
+    public void MoveCollectible()
+    {
+        var position = new Vector3(Random.Range(-9, 9), 0.2f, Random.Range(-9, 9));
+        spawnTarget.transform.localPosition = position;
+    }
 
     //private void Update()
     //{

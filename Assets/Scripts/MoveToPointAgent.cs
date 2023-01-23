@@ -31,6 +31,8 @@ public class MoveToPointAgent : Agent
 
     private SpawnManager spawnManager;
 
+    private GameObject collectible;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -54,10 +56,12 @@ public class MoveToPointAgent : Agent
         spawnManager = this.transform.parent.transform.parent.GetComponent<SpawnManager>();
         spawnManager.SpawnCollectible();
 
+        collectible = spawnManager.GetCollectible();
+
     }
     public override void OnEpisodeBegin()
     {
-        transform.position = initialPosition;
+        ResetAgent();
     }
 
 
@@ -67,6 +71,7 @@ public class MoveToPointAgent : Agent
         yRotation = this.transform.rotation.y;
         zRotation = this.transform.rotation.z;
         var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
+
         //Debug.Log("rotation reward: " + -reward);
         //Debug.Log("reward: " + GetCumulativeReward());
 
@@ -76,7 +81,8 @@ public class MoveToPointAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-
+        sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(collectible.transform.localPosition);
     }
 
     private void MoveAgent(ActionBuffers actions)
@@ -165,9 +171,9 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = positiveMaterial;
             }
 
-            Destroy(other.gameObject);
-            spawnManager.SpawnCollectible();
-            SetReward(1f);
+            spawnManager.MoveCollectible();
+
+            SetReward(+1f);
             EndEpisode();
         }
 
@@ -181,7 +187,6 @@ public class MoveToPointAgent : Agent
 
             SetReward(-1f);
             EndEpisode();
-            ResetAgent();
         }
     }
 }
