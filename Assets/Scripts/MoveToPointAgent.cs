@@ -11,10 +11,13 @@ public class MoveToPointAgent : Agent
     private Rigidbody rb;
     public float thrust = 2.7f;
 
+    public Material positiveMaterial;
+    public Material negativeMaterial;
+    public MeshRenderer floorMeshRenderer;
+
     private float xRotation;
     private float yRotation;
     private float zRotation;
-
 
     private Vector3 initialPosition;
     private Quaternion initialRotation;
@@ -50,6 +53,7 @@ public class MoveToPointAgent : Agent
 
         spawnManager = this.transform.parent.transform.parent.GetComponent<SpawnManager>();
         spawnManager.SpawnCollectible();
+
     }
     public override void OnEpisodeBegin()
     {
@@ -72,7 +76,9 @@ public class MoveToPointAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
+
     }
+
     private void MoveAgent(ActionBuffers actions)
     {
         var w = actions.DiscreteActions[0];
@@ -154,6 +160,11 @@ public class MoveToPointAgent : Agent
         // collect point
         if (other.gameObject.layer == 8)
         {
+            if (floorMeshRenderer != null)
+            {
+                floorMeshRenderer.material = positiveMaterial;
+            }
+
             Destroy(other.gameObject);
             spawnManager.SpawnCollectible();
             SetReward(1f);
@@ -163,6 +174,11 @@ public class MoveToPointAgent : Agent
         // collision with wall
         if (other.gameObject.layer == 9)
         {
+            if (floorMeshRenderer != null)
+            {
+                floorMeshRenderer.material = negativeMaterial;
+            }
+
             SetReward(-1f);
             EndEpisode();
             ResetAgent();
