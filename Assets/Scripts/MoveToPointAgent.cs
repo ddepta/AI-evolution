@@ -26,6 +26,8 @@ public class MoveToPointAgent : Agent
     private ParticleSystem thruster_s;
     private ParticleSystem thruster_d;
 
+    private SpawnManager spawnManager;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -45,6 +47,9 @@ public class MoveToPointAgent : Agent
         thruster_a = GameObject.Find("Thruster A").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_s = GameObject.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_d = GameObject.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
+
+        spawnManager = this.transform.parent.transform.parent.GetComponent<SpawnManager>();
+        spawnManager.SpawnCollectible();
     }
     public override void OnEpisodeBegin()
     {
@@ -59,7 +64,7 @@ public class MoveToPointAgent : Agent
         zRotation = this.transform.rotation.z;
         var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
         //Debug.Log("rotation reward: " + -reward);
-        Debug.Log("reward: " + GetCumulativeReward());
+        //Debug.Log("reward: " + GetCumulativeReward());
 
 
         //AddReward(-reward);
@@ -67,8 +72,6 @@ public class MoveToPointAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(targetTransform);
-        sensor.AddObservation(targetTransform.position);
     }
     private void MoveAgent(ActionBuffers actions)
     {
@@ -151,8 +154,8 @@ public class MoveToPointAgent : Agent
         // collect point
         if (other.gameObject.layer == 8)
         {
-            //Destroy(other.gameObject);
-            Debug.Log("collected");
+            Destroy(other.gameObject);
+            spawnManager.SpawnCollectible();
             SetReward(1f);
             EndEpisode();
         }
