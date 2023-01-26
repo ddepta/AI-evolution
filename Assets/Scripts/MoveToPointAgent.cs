@@ -67,31 +67,37 @@ public class MoveToPointAgent : Agent
 
     private void Update()
     {
-        xRotation = this.transform.rotation.x;
-        yRotation = this.transform.rotation.y;
-        zRotation = this.transform.rotation.z;
-        var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
+        //xRotation = this.transform.rotation.x;
+        //yRotation = this.transform.rotation.y;
+        //zRotation = this.transform.rotation.z;
+        //var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
 
         //Debug.Log("rotation reward: " + -reward);
         //Debug.Log("reward: " + GetCumulativeReward());
+        var reward = (Mathf.Abs(rb.angularVelocity.y / 100f));
 
-
-        //AddReward(-reward);
+        AddReward(-reward);
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
         sensor.AddObservation(transform.localPosition);
+        sensor.AddObservation(transform.localRotation.x);
+        sensor.AddObservation(transform.localRotation.y);
+        sensor.AddObservation(transform.localRotation.z);
+        sensor.AddObservation(rb.angularVelocity.y);
         sensor.AddObservation(collectible.transform.localPosition);
+        sensor.AddObservation(collectible.transform.position - gameObject.transform.position);
     }
 
     private void MoveAgent(ActionBuffers actions)
     {
+        AddReward(-0.0005f);
+
         var w = actions.DiscreteActions[0];
         var a = actions.DiscreteActions[1];
         var s = actions.DiscreteActions[2];
         var d = actions.DiscreteActions[3];
-        AddReward(-0.0005f);
 
         thruster_w.Stop();
         thruster_a.Stop();
@@ -140,11 +146,11 @@ public class MoveToPointAgent : Agent
 
     private void ResetAgent()
     {
-        this.transform.rotation = initialRotation;
-        this.transform.position = initialPosition;
-        this.rb.angularVelocity = initialAngularRotation;
-        this.rb.centerOfMass = initialCenterOfMass;
-        this.rb.velocity = new Vector3(0, 0, 0);
+        transform.rotation = initialRotation;
+        transform.position = initialPosition;
+        rb.angularVelocity = initialAngularRotation;
+        rb.centerOfMass = initialCenterOfMass;
+        rb.velocity = new Vector3(0, 0, 0);
     }
 
 
@@ -173,7 +179,7 @@ public class MoveToPointAgent : Agent
 
             spawnManager.MoveCollectible();
 
-            SetReward(+1f);
+            SetReward(1f);
             EndEpisode();
         }
 
