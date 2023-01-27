@@ -33,6 +33,10 @@ public class MoveToPointAgent : Agent
 
     private GameObject collectible;
 
+    private float? bestDistance = null;
+
+    private int tries = 0;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -74,9 +78,6 @@ public class MoveToPointAgent : Agent
 
         //Debug.Log("rotation reward: " + -reward);
         //Debug.Log("reward: " + GetCumulativeReward());
-        var reward = (Mathf.Abs(rb.angularVelocity.y / 100f));
-
-        AddReward(-reward);
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -136,6 +137,22 @@ public class MoveToPointAgent : Agent
             thruster_d.Play();
         }
 
+        var reward = (Mathf.Abs(rb.angularVelocity.y / 100f));
+        AddReward(-reward);
+
+        //var distance = (collectible.transform.position - gameObject.transform.position);
+        //float distanceToTarget = Vector3.Distance(transform.localPosition, collectible.transform.localPosition);
+        //
+        //if(bestDistance == null || distanceToTarget < bestDistance)
+        //{
+        //    bestDistance = distanceToTarget;
+        //    AddReward(0.0005f);
+        //
+        //}
+        //
+        //Debug.Log(distanceToTarget);
+
+
         //float moveSpeed = 1f;
         //transform.position = new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
 
@@ -177,7 +194,15 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = positiveMaterial;
             }
 
-            spawnManager.MoveCollectible();
+            if(tries < 1000)
+            {
+                spawnManager.MoveCollectible(y1: 0.1f, y2: 0.8f);
+                tries++;
+            }
+            else
+            {
+                spawnManager.MoveCollectible();
+            }
 
             SetReward(1f);
             EndEpisode();
