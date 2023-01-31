@@ -65,6 +65,7 @@ public class MoveToPointAgent : Agent
     }
     public override void OnEpisodeBegin()
     {
+        ResetAgent();
     }
 
 
