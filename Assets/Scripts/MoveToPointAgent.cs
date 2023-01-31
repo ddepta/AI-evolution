@@ -65,7 +65,6 @@ public class MoveToPointAgent : Agent
     }
     public override void OnEpisodeBegin()
     {
-        ResetAgent();
     }
 
 
@@ -194,7 +193,7 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = positiveMaterial;
             }
 
-            if(tries < 1000)
+            if(tries < 10000)
             {
                 spawnManager.MoveCollectible(y1: 0.1f, y2: 0.8f);
                 tries++;
