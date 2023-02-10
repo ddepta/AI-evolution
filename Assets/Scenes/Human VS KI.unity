@@ -232,6 +232,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AI
       objectReference: {fileID: 0}
+    - target: {fileID: 2994239046961845757, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 388f1589330033648b171e4b0de56012, type: 2}
     - target: {fileID: 2994239047206532470, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
       propertyPath: m_Name
       value: Instance
@@ -242,7 +246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2994239047206532471, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2994239047206532471, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -302,11 +306,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
---- !u!4 &224982628 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2994239047206532471, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
-  m_PrefabInstance: {fileID: 224982627}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &254048553
 GameObject:
   m_ObjectHideFlags: 0
@@ -5186,7 +5185,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1e42337e65ee14aa81698472ba90fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrust: 7
 --- !u!54 &436190599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5237,7 +5235,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 388f1589330033648b171e4b0de56012, type: 2}
+  - {fileID: 2100000, guid: 99c9bc84e5739ab448d8def84f50cbc4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -10300,8 +10298,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 436190596}
-  m_Father: {fileID: 224982628}
-  m_RootOrder: 3
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1310830857
 GameObject:
