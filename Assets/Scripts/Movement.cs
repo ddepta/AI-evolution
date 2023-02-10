@@ -5,7 +5,6 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     private Rigidbody rb;
-    public float thrust = 1.3f;
     private Vector3 initialPosition;
     private Quaternion initialRotation;
     private Vector3 initialAngularRotation;
@@ -17,6 +16,8 @@ public class Movement : MonoBehaviour
     private ParticleSystem thruster_s;
     private ParticleSystem thruster_d;
 
+    private float thrust = 3f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +25,7 @@ public class Movement : MonoBehaviour
         initialPosition = this.transform.position;
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
-        initialCenterOfMass = this.rb.centerOfMass;
-        initialCenterOfMass = new Vector3(0, -0.8f, 0);
+        initialCenterOfMass = new Vector3(0, -10f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
         thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -89,32 +89,39 @@ public class Movement : MonoBehaviour
         //Debug.Log(initialBody);
         //Debug.Log(initialRb.rotation.ToString());
 
+        var boost = thrust;
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            boost = thrust * 2;
+        }
+        
         if (Input.GetKey(KeyCode.W))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(transform.forward * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(transform.forward * boost);
+            rb.AddForce(transform.up * boost);
         }
 
         if (Input.GetKey(KeyCode.A))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(-transform.right * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(-transform.right * boost);
+            rb.AddForce(transform.up * boost);
         }
 
         if (Input.GetKey(KeyCode.S))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce((-transform.forward) * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce((-transform.forward) * boost);
+            rb.AddForce(transform.up * boost);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(transform.right * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(transform.right * boost);
+            rb.AddForce(transform.up * boost);
         }
     }
 }

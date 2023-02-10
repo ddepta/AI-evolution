@@ -9,7 +9,7 @@ public class MoveToPointAgent : Agent
 {
     [SerializeField] private Transform targetTransform;
     private Rigidbody rb;
-    public float thrust = 2.7f;
+    private float thrust = 3f;
 
     public Material positiveMaterial;
     public Material negativeMaterial;
@@ -99,41 +99,51 @@ public class MoveToPointAgent : Agent
         var a = actions.DiscreteActions[1];
         var s = actions.DiscreteActions[2];
         var d = actions.DiscreteActions[3];
+        var shift = actions.DiscreteActions[4];
 
         thruster_w.Stop();
         thruster_a.Stop();
         thruster_s.Stop();
         thruster_d.Stop();
 
+        var boost = thrust;
+
+        if (shift == 1)
+        {
+            boost = thrust * 2;
+        }
+
         //Debug.Log(w.ToString() + a.ToString() + s.ToString() + d.ToString());
 
         if (w == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce((-transform.forward) * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce((-transform.forward) * boost);
+            rb.AddForce(transform.up * boost);
             thruster_w.Play();
         }
+
         if (a == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(transform.forward * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(transform.forward * boost);
+            rb.AddForce(transform.up * boost);
             thruster_a.Play();
         }
 
         if (s == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(-transform.right * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(-transform.right * boost);
+            rb.AddForce(transform.up * boost);
             thruster_s.Play();
         }
+
         if (d == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            rb.AddForce(transform.right * thrust);
-            rb.AddForce(transform.up * thrust);
+            rb.AddForce(transform.right * boost);
+            rb.AddForce(transform.up * boost);
             thruster_d.Play();
         }
 
