@@ -49,7 +49,7 @@ public class MoveToPointAgent : Agent
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
         initialCenterOfMass = this.rb.centerOfMass;
-        initialCenterOfMass = new Vector3(0, -0.8f, 0);
+        initialCenterOfMass = new Vector3(0, -8f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
         thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -88,6 +88,11 @@ public class MoveToPointAgent : Agent
         sensor.AddObservation(transform.localRotation.z);
         sensor.AddObservation(rb.angularVelocity.y);
         sensor.AddObservation(collectible.transform.localPosition);
+
+        // Distance to collectible point
+        sensor.AddObservation(Vector3.Distance(collectible.transform.position, gameObject.transform.position));
+
+        // Direction to collectible point
         sensor.AddObservation(collectible.transform.position - gameObject.transform.position);
     }
 
@@ -110,7 +115,7 @@ public class MoveToPointAgent : Agent
 
         if (shift == 1)
         {
-            boost = thrust * 2;
+            boost = thrust * 1.3f;
         }
 
         //Debug.Log(w.ToString() + a.ToString() + s.ToString() + d.ToString());
@@ -203,16 +208,8 @@ public class MoveToPointAgent : Agent
             {
                 floorMeshRenderer.material = positiveMaterial;
             }
-
-            if(tries < 10000)
-            {
-                spawnManager.MoveCollectible(y1: 0.1f, y2: 0.8f);
-                tries++;
-            }
-            else
-            {
-                spawnManager.MoveCollectible();
-            }
+                
+            spawnManager.MoveCollectible();
 
             SetReward(1f);
             EndEpisode();
