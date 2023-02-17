@@ -9,7 +9,7 @@ public class MoveToPointAgent : Agent
 {
     [SerializeField] private Transform targetTransform;
     private Rigidbody rb;
-    private float thrust = 3f;
+    private float thrust = 2.7f;
 
     public Material positiveMaterial;
     public Material negativeMaterial;
@@ -33,9 +33,9 @@ public class MoveToPointAgent : Agent
 
     private GameObject collectible;
 
-    private float? bestDistance = null;
-
-    private int tries = 0;
+    private float level = 0f;
+    private int collectMultiple = 5;
+    private int collectCount = 0;
 
     void Start()
     {
@@ -49,7 +49,7 @@ public class MoveToPointAgent : Agent
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
         initialCenterOfMass = this.rb.centerOfMass;
-        initialCenterOfMass = new Vector3(0, -8f, 0);
+        initialCenterOfMass = new Vector3(0, -0.8f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
         thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -90,7 +90,7 @@ public class MoveToPointAgent : Agent
         sensor.AddObservation(collectible.transform.localPosition);
 
         // Distance to collectible point
-        sensor.AddObservation(Vector3.Distance(collectible.transform.position, gameObject.transform.position));
+       // sensor.AddObservation(Vector3.Distance(collectible.transform.position, gameObject.transform.position));
 
         // Direction to collectible point
         sensor.AddObservation(collectible.transform.position - gameObject.transform.position);
@@ -104,7 +104,7 @@ public class MoveToPointAgent : Agent
         var a = actions.DiscreteActions[1];
         var s = actions.DiscreteActions[2];
         var d = actions.DiscreteActions[3];
-        var shift = actions.DiscreteActions[4];
+        //var shift = actions.DiscreteActions[4];
 
         thruster_w.Stop();
         thruster_a.Stop();
@@ -113,10 +113,10 @@ public class MoveToPointAgent : Agent
 
         var boost = thrust;
 
-        if (shift == 1)
-        {
-            boost = thrust * 1.3f;
-        }
+        //if (shift == 1)
+        //{
+        //    boost = thrust * 1.3f;
+        //}
 
         //Debug.Log(w.ToString() + a.ToString() + s.ToString() + d.ToString());
 
@@ -208,11 +208,30 @@ public class MoveToPointAgent : Agent
             {
                 floorMeshRenderer.material = positiveMaterial;
             }
-                
+
             spawnManager.MoveCollectible();
 
-            SetReward(1f);
-            EndEpisode();
+            if (level != 11f)
+            {
+                level = Academy.Instance.EnvironmentParameters.GetWithDefault("collectible_height", 1f);
+                SetReward(1f);
+                EndEpisode();
+            }
+            else
+            {
+                if(collectMultiple == collectCount)
+                {
+                    AddReward(1f);
+                    collectCount = 0;
+                    EndEpisode();
+                }
+                else
+                {
+                    AddReward((1f / collectMultiple));
+                    collectCount++;
+                }
+            }
+
         }
 
         // collision with wall
