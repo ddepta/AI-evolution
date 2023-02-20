@@ -9,18 +9,17 @@ public class Movement : MonoBehaviour
     private Quaternion initialRotation;
     private Vector3 initialAngularRotation;
     private Vector3 initialCenterOfMass;
-    Rigidbody initialRb;
 
     private ParticleSystem thruster_w;
     private ParticleSystem thruster_a;
     private ParticleSystem thruster_s;
     private ParticleSystem thruster_d;
 
-    private float thrust = 3f;
-
     private SpawnManager spawnManager;
 
-    private GameObject collectible;
+    private float thrust = 2.7f;
+
+    public GameObject instance;
 
     // Start is called before the first frame update
     void Start()
@@ -37,9 +36,7 @@ public class Movement : MonoBehaviour
         thruster_s = GameObject.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_d = GameObject.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
 
-        spawnManager = this.transform.parent.transform.parent.GetComponent<SpawnManager>();
-        spawnManager.SpawnCollectible();
-        collectible = spawnManager.GetCollectible();
+        spawnManager = instance.GetComponent<SpawnManager>();
     }
 
     private void Update()
@@ -131,6 +128,14 @@ public class Movement : MonoBehaviour
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
             rb.AddForce(transform.right * boost);
             rb.AddForce(transform.up * boost);
+        }
+    }
+    void OnTriggerEnter(Collider other)
+    {
+        // collect point
+        if (other.gameObject.layer == 8)
+        {
+            spawnManager.MoveCollectible();
         }
     }
 }

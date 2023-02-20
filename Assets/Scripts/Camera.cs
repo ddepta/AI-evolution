@@ -7,6 +7,7 @@ public class Camera : MonoBehaviour
     public Transform Player;
     private Vector3 initialPlayerPos;
     private Vector3 initialCameraPos;
+
     // Start is called before the first frame update
     void Start()
     {

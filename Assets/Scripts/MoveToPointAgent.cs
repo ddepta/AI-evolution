@@ -36,6 +36,8 @@ public class MoveToPointAgent : Agent
     private int collectAmount = 3;
     private int collectCount = 0;
 
+    public bool training = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -149,17 +151,12 @@ public class MoveToPointAgent : Agent
         MoveAgent(actions);
     }
 
-    public override void Heuristic(in ActionBuffers actionsOut)
-    {
-        ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-    }
-
     void OnTriggerEnter(Collider other)
     {
         // collect point
         if (other.gameObject.layer == 8)
         {
-            if (floorMeshRenderer != null)
+            if (floorMeshRenderer != null && training)
             {
                 floorMeshRenderer.material = positiveMaterial;
             }
@@ -167,15 +164,18 @@ public class MoveToPointAgent : Agent
             collectCount++;
 
             spawnManager.MoveCollectible();
-            if (collectAmount == collectCount)
+            if(training)
             {
-                AddReward(2f);
-                EndEpisode();
-                collectCount = 0;
-            }
-            else
-            {
-                AddReward(1f);
+                if (collectAmount == collectCount)
+                {
+                    AddReward(2f);
+                    EndEpisode();
+                    collectCount = 0;
+                }
+                else
+                {
+                    AddReward(1f);
+                }
             }
 
         }
@@ -183,7 +183,7 @@ public class MoveToPointAgent : Agent
         // collision with wall
         if (other.gameObject.layer == 9)
         {
-            if (floorMeshRenderer != null)
+            if (floorMeshRenderer != null && training)
             {
                 floorMeshRenderer.material = negativeMaterial;
             }

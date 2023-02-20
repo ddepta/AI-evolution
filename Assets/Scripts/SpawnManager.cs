@@ -5,7 +5,6 @@ using Unity.MLAgents;
 
 public class SpawnManager : MonoBehaviour
 {
-    bool spawnRequired = true;
     public GameObject spawnPoint;
 
     private GameObject spawnTarget;
