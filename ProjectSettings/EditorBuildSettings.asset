@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Human VS KI.unity
+    guid: 7edb6dea1b9c01d4389bb62af080c0d6
   m_configObjects: {}
