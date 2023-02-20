@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -21,6 +22,10 @@ public class Movement : MonoBehaviour
 
     public GameObject instance;
 
+    private int score = 0;
+
+    public TextMeshProUGUI PlayerScoreText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,12 +36,21 @@ public class Movement : MonoBehaviour
         initialCenterOfMass = new Vector3(0, -4f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
-        thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
-        thruster_a = GameObject.Find("Thruster A").transform.GetChild(0).GetComponent<ParticleSystem>();
-        thruster_s = GameObject.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
-        thruster_d = GameObject.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_w = transform.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_a = transform.Find("Thruster A").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_s = transform.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
+        thruster_d = transform.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
 
         spawnManager = instance.GetComponent<SpawnManager>();
+    }
+
+    private void ResetRocket()
+    {
+        this.transform.rotation = initialRotation;
+        this.transform.position = initialPosition;
+        this.rb.angularVelocity = initialAngularRotation;
+        this.rb.centerOfMass = initialCenterOfMass;
+        this.rb.velocity = new Vector3(0, 0, 0);
     }
 
     private void Update()
@@ -80,12 +94,7 @@ public class Movement : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
         {
-            //Apply a force to this Rigidbody in direction of this GameObjects up axis
-            this.transform.rotation = initialRotation;
-            this.transform.position = initialPosition;
-            this.rb.angularVelocity = initialAngularRotation;
-            this.rb.centerOfMass = initialCenterOfMass;
-            this.rb.velocity = new Vector3(0, 0, 0);
+            ResetRocket();
         }
     }
 
@@ -136,6 +145,19 @@ public class Movement : MonoBehaviour
         if (other.gameObject.layer == 8)
         {
             spawnManager.MoveCollectible();
+
+            // Score for UI-Scoreboard
+            if (PlayerScoreText != null)
+            {
+                score++;
+                PlayerScoreText.text = "Punkte: " + score;
+            }
+        }
+
+        // collision with wall
+        if (other.gameObject.layer == 9)
+        {
+            ResetRocket();
         }
     }
 }

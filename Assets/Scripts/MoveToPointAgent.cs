@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
@@ -35,6 +36,10 @@ public class MoveToPointAgent : Agent
 
     private int collectAmount = 3;
     private int collectCount = 0;
+
+    private int score = 0;
+
+    public TextMeshProUGUI AIScoreText;
 
     public bool training = false;
 
@@ -161,6 +166,14 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = positiveMaterial;
             }
 
+            // Score for UI-Scoreboard (not for Training)
+            if(AIScoreText != null)
+            {
+                score++;
+                AIScoreText.text = "KI-Punkte: " + score;
+            }
+
+            // Score for AI-Training which will be resettet
             collectCount++;
 
             spawnManager.MoveCollectible();

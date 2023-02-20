@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 2994239046961845757}
   - component: {fileID: 2994239046961845756}
   - component: {fileID: 2994239046961845747}
-  - component: {fileID: 2994239046961845753}
   - component: {fileID: 2994239046961845755}
   - component: {fileID: 2994239046961845754}
   - component: {fileID: 2994239046961845732}
@@ -245,20 +244,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!136 &2994239046961845753
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2994239046961845745}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2994239046961845755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,6 +294,7 @@ MonoBehaviour:
   positiveMaterial: {fileID: 2100000, guid: 7fe937fe829640b448dcea1ccfcce55b, type: 2}
   negativeMaterial: {fileID: 2100000, guid: fba99b4d61eea0145b45d65ac542b4d1, type: 2}
   floorMeshRenderer: {fileID: 2994239048175527071}
+  AIScore: {fileID: 0}
   training: 0
 --- !u!114 &2994239046961845732
 MonoBehaviour:
