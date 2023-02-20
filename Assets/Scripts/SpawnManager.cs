@@ -9,8 +9,6 @@ public class SpawnManager : MonoBehaviour
     public GameObject spawnPoint;
 
     private GameObject spawnTarget;
-    int count = 0;
-
 
     public void SpawnCollectible()
     {
@@ -36,16 +34,4 @@ public class SpawnManager : MonoBehaviour
 
         spawnTarget.transform.localPosition = position;
     }
-
-    //private void Update()
-    //{
-    //
-    //    count++;
-    //
-    //    if (count == 100)
-    //    {
-    //        count = 0;
-    //        SpawnCollectible();
-    //    }
-    //}
 }

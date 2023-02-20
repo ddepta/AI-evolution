@@ -33,7 +33,6 @@ public class MoveToPointAgent : Agent
 
     private GameObject collectible;
 
-    private float level = 0f;
     private int collectAmount = 3;
     private int collectCount = 0;
 
@@ -44,11 +43,9 @@ public class MoveToPointAgent : Agent
         yRotation = this.transform.rotation.y;
         zRotation = this.transform.rotation.z;
 
-
         initialPosition = this.transform.position;
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
-        initialCenterOfMass = this.rb.centerOfMass;
         initialCenterOfMass = new Vector3(0, -4f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
@@ -66,18 +63,6 @@ public class MoveToPointAgent : Agent
     public override void OnEpisodeBegin()
     {
         ResetAgent();
-    }
-
-
-    private void Update()
-    {
-        //xRotation = this.transform.rotation.x;
-        //yRotation = this.transform.rotation.y;
-        //zRotation = this.transform.rotation.z;
-        //var reward = (Mathf.Abs(xRotation) + Mathf.Abs(yRotation) + Mathf.Abs(zRotation));
-
-        //Debug.Log("rotation reward: " + -reward);
-        //Debug.Log("reward: " + GetCumulativeReward());
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -114,13 +99,6 @@ public class MoveToPointAgent : Agent
 
         var boost = thrust;
 
-        //if (shift == 1)
-        //{
-        //    boost = thrust * 1.3f;
-        //}
-
-        //Debug.Log(w.ToString() + a.ToString() + s.ToString() + d.ToString());
-
         if (w == 1)
         {
             //Apply a force to this Rigidbody in direction of this GameObjects up axis
@@ -155,26 +133,6 @@ public class MoveToPointAgent : Agent
 
         var reward = (Mathf.Abs(rb.angularVelocity.y / 100f));
         AddReward(-reward);
-
-        //var distance = (collectible.transform.position - gameObject.transform.position);
-        //float distanceToTarget = Vector3.Distance(transform.localPosition, collectible.transform.localPosition);
-        //
-        //if(bestDistance == null || distanceToTarget < bestDistance)
-        //{
-        //    bestDistance = distanceToTarget;
-        //    AddReward(0.0005f);
-        //
-        //}
-        //
-        //Debug.Log(distanceToTarget);
-
-
-        //float moveSpeed = 1f;
-        //transform.position = new Vector3(moveX, 0, moveZ) * Time.deltaTime * moveSpeed;
-
-        //Debug.Log(actions.DiscreteActions[0]);
-        //base.OnActionReceived(actions);
-
     }
 
     private void ResetAgent()
@@ -186,8 +144,6 @@ public class MoveToPointAgent : Agent
         rb.velocity = new Vector3(0, 0, 0);
     }
 
-
-
     public override void OnActionReceived(ActionBuffers actions)
     {
         MoveAgent(actions);
@@ -196,8 +152,6 @@ public class MoveToPointAgent : Agent
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         ActionSegment<float> continuousActions = actionsOut.ContinuousActions;
-        //continuousActions[0] = Input.GetAxisRaw("Horizontal");
-        //continuousActions[1] = Input.GetAxisRaw("Vertical");
     }
 
     void OnTriggerEnter(Collider other)
