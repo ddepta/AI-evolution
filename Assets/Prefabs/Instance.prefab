@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 13
+    VectorObservationSize: 15
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 647fa61e081aab14996381e23d286ecc, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: MoveToPoint
@@ -317,7 +317,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 3000
+  MaxStep: 30000
   targetTransform: {fileID: 0}
   positiveMaterial: {fileID: 2100000, guid: 7fe937fe829640b448dcea1ccfcce55b, type: 2}
   negativeMaterial: {fileID: 2100000, guid: fba99b4d61eea0145b45d65ac542b4d1, type: 2}

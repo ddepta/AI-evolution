@@ -18,6 +18,10 @@ public class Movement : MonoBehaviour
 
     private float thrust = 3f;
 
+    private SpawnManager spawnManager;
+
+    private GameObject collectible;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,17 +29,22 @@ public class Movement : MonoBehaviour
         initialPosition = this.transform.position;
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
-        initialCenterOfMass = new Vector3(0, -10f, 0);
+        initialCenterOfMass = new Vector3(0, -4f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
         thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_a = GameObject.Find("Thruster A").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_s = GameObject.Find("Thruster S").transform.GetChild(0).GetComponent<ParticleSystem>();
         thruster_d = GameObject.Find("Thruster D").transform.GetChild(0).GetComponent<ParticleSystem>();
+
+        spawnManager = this.transform.parent.transform.parent.GetComponent<SpawnManager>();
+        spawnManager.SpawnCollectible();
+        collectible = spawnManager.GetCollectible();
     }
 
     private void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.W))
         {
             thruster_w.Play();

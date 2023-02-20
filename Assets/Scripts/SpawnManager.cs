@@ -17,25 +17,22 @@ public class SpawnManager : MonoBehaviour
         spawnTarget = Instantiate(spawnPoint);
         spawnTarget.transform.parent = transform;
 
-        MoveCollectible(y1: 0.1f, y2: 0.4f);
+        MoveCollectible();
     }
 
     public GameObject GetCollectible() { return spawnTarget; }
 
-    public void MoveCollectible(float x = 13f, float y1 = 0.1f, float y2 = 10f, float z = 13f)
+    public void MoveCollectible()
     {
-        float y = Academy.Instance.EnvironmentParameters.GetWithDefault("collectible_height", 1f);
-        Vector3 position;
+        float offset = Academy.Instance.EnvironmentParameters.GetWithDefault("collectible_offset", 1f);
 
-        if(y == 11f)
-        {
-            position = new Vector3(Random.Range(-x, x), Random.Range(-y1, y2), Random.Range(-z, z));
+        var xSign = (Random.Range(0, 2) * 2 - 1);
+        var zSign = (Random.Range(0, 2) * 2 - 1);
 
-        }
-        else
-        {
-            position = new Vector3(Random.Range(-x, x), y, Random.Range(-z, z));
-        }
+        var x = Random.Range(2, (3f + offset)) * xSign;
+        var z = Random.Range(2, (3f + offset)) * zSign;
+
+        Vector3 position = new Vector3(x, offset, z);
 
         spawnTarget.transform.localPosition = position;
     }

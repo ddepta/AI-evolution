@@ -34,7 +34,7 @@ public class MoveToPointAgent : Agent
     private GameObject collectible;
 
     private float level = 0f;
-    private int collectMultiple = 5;
+    private int collectAmount = 3;
     private int collectCount = 0;
 
     void Start()
@@ -49,7 +49,7 @@ public class MoveToPointAgent : Agent
         initialRotation = this.transform.rotation;
         initialAngularRotation = this.rb.angularVelocity;
         initialCenterOfMass = this.rb.centerOfMass;
-        initialCenterOfMass = new Vector3(0, -0.8f, 0);
+        initialCenterOfMass = new Vector3(0, -4f, 0);
         this.rb.centerOfMass = initialCenterOfMass;
 
         thruster_w = GameObject.Find("Thruster W").transform.GetChild(0).GetComponent<ParticleSystem>();
@@ -88,9 +88,10 @@ public class MoveToPointAgent : Agent
         sensor.AddObservation(transform.localRotation.z);
         sensor.AddObservation(rb.angularVelocity.y);
         sensor.AddObservation(collectible.transform.localPosition);
+        sensor.AddObservation(collectCount);
 
         // Distance to collectible point
-       // sensor.AddObservation(Vector3.Distance(collectible.transform.position, gameObject.transform.position));
+        sensor.AddObservation(Vector3.Distance(collectible.transform.position, gameObject.transform.position));
 
         // Direction to collectible point
         sensor.AddObservation(collectible.transform.position - gameObject.transform.position);
@@ -98,7 +99,7 @@ public class MoveToPointAgent : Agent
 
     private void MoveAgent(ActionBuffers actions)
     {
-        AddReward(-0.0005f);
+        AddReward(-0.00001f);
 
         var w = actions.DiscreteActions[0];
         var a = actions.DiscreteActions[1];
@@ -209,27 +210,18 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = positiveMaterial;
             }
 
-            spawnManager.MoveCollectible();
+            collectCount++;
 
-            if (level != 11f)
+            spawnManager.MoveCollectible();
+            if (collectAmount == collectCount)
             {
-                level = Academy.Instance.EnvironmentParameters.GetWithDefault("collectible_height", 1f);
-                SetReward(1f);
+                AddReward(2f);
                 EndEpisode();
+                collectCount = 0;
             }
             else
             {
-                if(collectMultiple == collectCount)
-                {
-                    AddReward(1f);
-                    collectCount = 0;
-                    EndEpisode();
-                }
-                else
-                {
-                    AddReward((1f / collectMultiple));
-                    collectCount++;
-                }
+                AddReward(1f);
             }
 
         }
@@ -242,7 +234,8 @@ public class MoveToPointAgent : Agent
                 floorMeshRenderer.material = negativeMaterial;
             }
 
-            SetReward(-1f);
+            SetReward(-(1f + collectCount));
+            collectCount = 0;
             EndEpisode();
         }
     }
