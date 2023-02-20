@@ -5114,7 +5114,6 @@ GameObject:
   - component: {fileID: 436190600}
   - component: {fileID: 436190599}
   - component: {fileID: 436190598}
-  - component: {fileID: 436190597}
   m_Layer: 7
   m_Name: Capsule
   m_TagString: Untagged
@@ -5141,20 +5140,6 @@ Transform:
   m_Father: {fileID: 1031844669}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &436190597
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436190595}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &436190598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5168,6 +5153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instance: {fileID: 916904393}
+  PlayerScoreText: {fileID: 1457688406}
 --- !u!54 &436190599
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5354,7 +5340,7 @@ GameObject:
   - component: {fileID: 874422936}
   - component: {fileID: 874422935}
   m_Layer: 5
-  m_Name: AIScore
+  m_Name: AIScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15248,7 +15234,7 @@ GameObject:
   - component: {fileID: 1457688407}
   - component: {fileID: 1457688406}
   m_Layer: 5
-  m_Name: PlayerScore
+  m_Name: PlayerScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15680,6 +15666,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2994239046961845754, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
+      propertyPath: AIScore
+      value: 
+      objectReference: {fileID: 874422935}
+    - target: {fileID: 2994239046961845754, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
+      propertyPath: AIScoreText
+      value: 
+      objectReference: {fileID: 874422935}
     - target: {fileID: 2994239046961845755, guid: a0be0ff79a0fdc745a9cfb1ce38b671a, type: 3}
       propertyPath: m_Model
       value: 
